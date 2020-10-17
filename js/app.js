@@ -40,11 +40,21 @@ footer.innerHTML = `&copy; ${(new Date()).getFullYear()}. Code with <3`;
 
 const content = document.querySelector('#content');
 
+const tasks = [];
+
 const columnEls = Settings.columns.map(col => {
   return createColumnDiv(col);
 });
 
-const tasks = [];
+columnEls.forEach(columnEl => {
+  columnEl.addTaskBtn.addEventListener('click', () => {
+    const data = prompt('Enter task info:', '');
+    if (data) {
+      const cardEl = createCardEl(data);
+      columnEl.columnContentEl.appendChild(cardEl);
+    }
+  });
+});
 
 function createColumnDiv(columnName) {
   const columnEl = document.createElement('div');
@@ -67,8 +77,38 @@ function createColumnDiv(columnName) {
   columnHeaderEl.appendChild(addTaskBtn);
 
   columnEl.appendChild(columnHeaderEl);
+
+  const columnContentEl = document.createElement('div');
+  columnContentEl.setAttribute('class', 'col-content');
+
+  columnEl.appendChild(columnContentEl);
   
   content.appendChild(columnEl);
 
-  return columnEl;
+  return {
+    columnContentEl: columnContentEl,
+    addTaskBtn: addTaskBtn
+  };
+}
+
+function createCardEl(data) {
+  const divEl = document.createElement('div');
+  divEl.setAttribute('class', 'card');
+  divEl.innerHTML = data;
+
+  divEl.addEventListener('click', () => {
+    const m_data = prompt('Edit task info:', divEl.innerHTML);
+    if (m_data) {
+      divEl.innerHTML = m_data;
+    }
+  });
+
+  divEl.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+    if (confirm('Do you really wanna delete the task?')) {
+      divEl.remove();
+    }
+  })
+
+  return divEl;
 }
