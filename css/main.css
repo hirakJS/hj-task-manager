@@ -64,6 +64,26 @@ section#content .col {
   border-radius: 5px;
 }
 
+section#content .col .col-header {
+  display: flex;
+  padding: 10px;
+}
+
+section#content .col .col-header .col-header-name {
+  flex: 1;
+  line-height: 24px;
+}
+
+button.btn {
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  outline: none;
+}
+
 footer {
   display: none;
   height: 25px;
