@@ -56,7 +56,6 @@ columnEls.forEach(columnEl => {
   });
 });
 
-
 function createColumnDiv(columnName) {
   const columnEl = document.createElement('div');
   columnEl.setAttribute('id', `col-${columnName.toLowerCase().replace(' ', '-')}`);
