@@ -34,11 +34,12 @@ section#content {
   background-color: #fff;
 }
 
-#content .col {
-  background-color: #dddddd;
+section#content .col {
+  background-color: #eee;
+  border-color: #ddd;
 }
 
 footer {
   color: #636363;
-  border-color: #dddddd;
+  border-color: #ddd;
 }
