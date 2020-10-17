@@ -39,6 +39,15 @@ section#content .col {
   border-color: #ddd;
 }
 
+button.btn {
+  background-color: #000;
+  color: #fff;
+}
+
+button.btn:hover {
+  background-color: #147dd3;
+}
+
 footer {
   color: #636363;
   border-color: #ddd;

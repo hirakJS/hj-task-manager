@@ -40,10 +40,35 @@ footer.innerHTML = `&copy; ${(new Date()).getFullYear()}. Code with <3`;
 
 const content = document.querySelector('#content');
 
-for (i in cols = Settings.columns) {
-  const divEl = document.createElement('div');
-  divEl.setAttribute('id', `col-${cols[i].toLowerCase().replace(' ', '-')}`);
-  divEl.setAttribute('class', 'col');
+const columnEls = Settings.columns.map(col => {
+  return createColumnDiv(col);
+});
+
+const tasks = [];
+
+function createColumnDiv(columnName) {
+  const columnEl = document.createElement('div');
+  columnEl.setAttribute('id', `col-${columnName.toLowerCase().replace(' ', '-')}`);
+  columnEl.setAttribute('class', 'col');
+
+  const columnHeaderEl = document.createElement('div');
+  columnHeaderEl.setAttribute('class', 'col-header');
+
+  const columnHeaderName = document.createElement('div');
+  columnHeaderName.setAttribute('class', 'col-header-name');
+  columnHeaderName.innerHTML = columnName;
+
+  columnHeaderEl.appendChild(columnHeaderName);
+
+  const addTaskBtn = document.createElement('button');
+  addTaskBtn.setAttribute('class', 'btn');
+  addTaskBtn.innerHTML = '+';
+
+  columnHeaderEl.appendChild(addTaskBtn);
+
+  columnEl.appendChild(columnHeaderEl);
   
-  content.appendChild(divEl);
+  content.appendChild(columnEl);
+
+  return columnEl;
 }
