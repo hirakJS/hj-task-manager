@@ -39,6 +39,11 @@ section#content .col {
   border-color: #ddd;
 }
 
+section#content1 .col {
+  background-color: #F7E8FC;
+  border-color: #ddd;
+}
+
 button.btn {
   background-color: #000;
   color: #fff;
