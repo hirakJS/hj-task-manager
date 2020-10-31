@@ -29,6 +29,11 @@ const Settings = (function(){
       'In Progress',
       'Done',
     ],
+    counts: [
+      'Todo Count',
+      'Progress Count',
+      'Done Count',
+    ],
     currentTheme: 'light',
   };
 }());
