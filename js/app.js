@@ -35,6 +35,8 @@ const app = document.querySelector('#app');
 const brand = document.querySelector('#brand');
 brand.innerHTML = AppInfo.name;
 
+const createBtn = document.querySelector('#create-btn');
+
 const footer = document.querySelector('footer');
 footer.innerHTML = `&copy; ${(new Date()).getFullYear()}. Code with <3`;
 
@@ -46,14 +48,12 @@ const columnEls = Settings.columns.map(col => {
   return createColumnDiv(col);
 });
 
-columnEls.forEach(columnEl => {
-  columnEl.addTaskBtn.addEventListener('click', () => {
-    const data = prompt('Enter task info:', '');
-    if (data) {
-      const cardEl = createCardEl(data);
-      columnEl.columnContentEl.appendChild(cardEl);
-    }
-  });
+createBtn.addEventListener('click', () => {
+  const data = prompt('Enter task info:', '');
+  if (data) {
+    const cardEl = createCardEl(data);
+    columnEls[0].columnContentEl.appendChild(cardEl);
+  }
 });
 
 function createColumnDiv(columnName) {
@@ -70,24 +70,17 @@ function createColumnDiv(columnName) {
 
   columnHeaderEl.appendChild(columnHeaderName);
 
-  const addTaskBtn = document.createElement('button');
-  addTaskBtn.setAttribute('class', 'btn');
-  addTaskBtn.innerHTML = '+';
-
-  columnHeaderEl.appendChild(addTaskBtn);
-
   columnEl.appendChild(columnHeaderEl);
 
   const columnContentEl = document.createElement('div');
   columnContentEl.setAttribute('class', 'col-content');
 
   columnEl.appendChild(columnContentEl);
-  
+
   content.appendChild(columnEl);
 
   return {
-    columnContentEl: columnContentEl,
-    addTaskBtn: addTaskBtn
+    columnContentEl: columnContentEl
   };
 }
 
