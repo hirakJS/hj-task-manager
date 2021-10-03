@@ -23,43 +23,44 @@
 */
 
 header {
-    background-color: #006696;
-  }
+  background-color: #006696;
+}
   
 header #brand {
-     color: #fff;
-  }
+  color: #fff;
+}
   
 section#content1 {
-    background-color: #454546;
-    color: #fff;
-  }
+  background-color: #454546;
+  color: #fff;
+}
   
 section#content .col {
-    background-color: #454546;
-    border-color: rgb(139 139 139);
-    color: #fff;
-  }
+  background-color: #454546;
+  border-color: rgb(139 139 139);
+  color: #fff;
+}
   
 section#content1 .col {
-    background-color: #454546;
-    border-color: rgb(139 139 139);
-    color: #fff;
-  }
+  background-color: #454546;
+  border-color: rgb(139 139 139);
+  color: #fff;
+}
   
 button.btn {
-    background-color: rgb(100, 100, 100);
-    color: #fff;
-  }
+  background-color: rgb(100, 100, 100);
+  color: #fff;
+}
   
 button.btn:hover {
-    background-color: #2f2f30;
-  }
+  background-color: #2f2f30;
+}
   
 footer {
-    color: #636363;
-    border-color: rgb(139 139 139);
-  }
+  color: #636363;
+  border-color: rgb(139 139 139);
+}
+  
 #app{
-    background-color: #454546;
-  }
+  background-color: #454546;
+}
