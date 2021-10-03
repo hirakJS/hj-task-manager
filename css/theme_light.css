@@ -30,6 +30,15 @@ header #brand {
   color: #fff;
 }
 
+header #create-btn {
+  background-color: #1db2f9;
+  color: #fff;
+}
+
+header #create-btn:hover {
+  background-color: #179bd8;
+}
+
 section#content {
   background-color: #fff;
 }
