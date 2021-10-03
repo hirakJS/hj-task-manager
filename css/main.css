@@ -73,7 +73,29 @@ section#content {
   overflow-y: hidden;
 }
 
+section#content1 {
+  /* height: 100vh; */
+  height: 20%;
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 section#content .col {
+  width: 300px;
+  margin: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+section#content1 .col {
   width: 300px;
   margin: 10px;
   border-width: 1px;
@@ -88,8 +110,12 @@ section#content .col .col-header {
   padding: 10px;
 }
 
+section#content1 .col .col-header {
+  display: flex;
+  padding: 20px;
+}
 section#content .col .col-header .col-header-name {
-  flex: 1;
+  flex: 2;
   line-height: 24px;
 }
 
