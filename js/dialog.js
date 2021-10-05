@@ -22,106 +22,133 @@
   SOFTWARE.
 */
 
-const Dialog = (function(){
-  return {
-    create: createDialog,
-    data: getFormValues
-  };
-}());
+'use strict';
 
-function createDialog(dialogObj) {
-  const id = dialogObj.id;
-  const title = dialogObj.title;
-  const body = dialogObj.body;
+const InputType = Object.freeze({
+  "text": 1,
+  "number": 2,
+  "textArea": 3
+});
 
-  const divEl = document.createElement('div');
-  divEl.id = id;
-  divEl.setAttribute('class', 'dialog');
+class Dialog {
+  #id;
+  #title;
+  body;
+  #buttons;
+  element;
 
-  const dialogHeaderEl = document.createElement('div');
-  dialogHeaderEl.setAttribute('class', 'dialog-header');
-  dialogHeaderEl.innerHTML = title;
+  constructor(id, title, body, buttons) {
+    this.#id = id;           // string
+    this.#title = title;     // string
+    this.body = body;       // array of objects
+    this.#buttons = buttons; // array
 
-  const dialogBodyEl = document.createElement('div');
-  dialogBodyEl.setAttribute('class', 'dialog-body');
+    this.element = document.createElement('div');
+    this.#createDialog();
+  }
 
-  const formEl = document.createElement('form');
-  
-  const textInputEl = createInputEl('text-one', 'text', 'text-one', '', 'Title');
+  #createDialog() {
+    const divEl = this.element;
+    const dialogHeaderEl = document.createElement('div');
+    const dialogBodyEl = document.createElement('div');
+    const dialogFooterEl = document.createElement('div');
+    const formEl = document.createElement('form');
 
-  const textAreaEl = createTextAreaEl('description', 'Description');
+    divEl.id = this.#id;
+    divEl.setAttribute('class', 'dialog');
 
-  const dialogFooterEl = document.createElement('div');
-  dialogFooterEl.setAttribute('class', 'dialog-footer');
-  dialogFooterEl.appendChild(createButtonEl('cancel', 'Cancel', 'closeDialog()', true));
-  dialogFooterEl.appendChild(createButtonEl('submit', 'Submit', 'addCard(event)'));
-  
-  if (textInputEl.labelEl)
-    formEl.appendChild(textInputEl.labelEl);
-  formEl.appendChild(textInputEl.inputEl);
+    dialogHeaderEl.setAttribute('class', 'dialog-header');
+    dialogHeaderEl.innerHTML = this.#title;
 
-  if (textAreaEl.labelEl)
-    formEl.appendChild(textAreaEl.labelEl);
-  formEl.appendChild(textAreaEl.inputEl);
+    dialogBodyEl.setAttribute('class', 'dialog-body');
 
-  dialogBodyEl.appendChild(formEl);
+    dialogFooterEl.setAttribute('class', 'dialog-footer');
 
-  divEl.appendChild(dialogHeaderEl);
-  divEl.appendChild(dialogBodyEl);
-  divEl.appendChild(dialogFooterEl);
+    this.body.forEach((b, i) => {
+      var inputEl;
+      switch (b.type) {
+        case InputType.text:
+          inputEl = this.createInputEl(`text-${b.name}-${i}`, 'text', b.name, '', b.label);
+          break;
+        case InputType.textArea:
+          inputEl = this.createTextAreaEl(`textarea-${b.name}-${i}`, b.name, b.label);
+          break;
+        default:
+          break;
+      }
 
-  return divEl;
-}
+      if (inputEl) {
+        if (inputEl.labelEl)
+          formEl.appendChild(inputEl.labelEl);
+        
+        formEl.appendChild(inputEl.inputEl);
+      }
+    });
 
-function createInputEl(id, type, name, value, label) {
-  const inputEl = document.createElement('input');
-  inputEl.id = id;
-  inputEl.type = type;
-  inputEl.name = name;
+    dialogBodyEl.appendChild(formEl);
 
-  return {
-    inputEl: inputEl,
-    labelEl: label ? createLabelEl(name, label) : null
-  };
-}
+    dialogFooterEl.appendChild(this.createButtonEl('cancel', 'Cancel', 'closeDialog()', true));
+    dialogFooterEl.appendChild(this.createButtonEl('submit', 'Submit', 'addCard()'));
 
-function createTextAreaEl(name, label) {
-  const textAreaEl = document.createElement('textarea');
-  textAreaEl.name = name;
-  textAreaEl.rows = "10";
+    divEl.appendChild(dialogHeaderEl);
+    divEl.appendChild(dialogBodyEl);
+    divEl.appendChild(dialogFooterEl);
+  }
 
-  return {
-    inputEl: textAreaEl,
-    labelEl: label ? createLabelEl(name, label) : null
-  };
-}
+  createInputEl(id, type, name, value, label) {
+    const inputEl = document.createElement('input');
+    inputEl.id = id;
+    inputEl.type = type;
+    inputEl.name = name;
 
-function createLabelEl(forName, value) {
-  const labelEl = document.createElement('label');
-  labelEl.setAttribute('for', forName);
-  labelEl.innerHTML = value;
-  return labelEl;
-}
+    return {
+      inputEl: inputEl,
+      labelEl: label ? this.createLabelEl(name, label) : null
+    };
+  }
 
-function createButtonEl(id, label, action, hasNoBackground) {
-  const buttonEl = document.createElement('button');
-  buttonEl.id = id;
-  if (hasNoBackground)
-    buttonEl.setAttribute('class', 'btn no-bg');
-  else
-    buttonEl.setAttribute('class', 'btn');
+  createTextAreaEl(id, name, label) {
+    const textAreaEl = document.createElement('textarea');
+    textAreaEl.id = id;
+    textAreaEl.name = name;
+    textAreaEl.rows = "10";
 
-  buttonEl.innerHTML = label;
-  buttonEl.setAttribute('onclick', action);
+    return {
+      inputEl: textAreaEl,
+      labelEl: label ? this.createLabelEl(name, label) : null
+    };
+  }
 
-  return buttonEl;
-}
+  createLabelEl(forName, value) {
+    const labelEl = document.createElement('label');
+    labelEl.setAttribute('for', forName);
+    labelEl.innerHTML = value;
+    return labelEl;
+  }
 
-function getFormValues() {
-  const form = {};
-  const formElements = document.querySelector('form').elements;
+  createButtonEl(id, label, action, hasNoBackground) {
+    const buttonEl = document.createElement('button');
+    buttonEl.id = id;
+    if (hasNoBackground)
+      buttonEl.setAttribute('class', 'btn no-bg');
+    else
+      buttonEl.setAttribute('class', 'btn');
 
-  form.title = formElements["text-one"].value;
+    buttonEl.innerHTML = label;
+    buttonEl.setAttribute('onclick', action);
 
-  return form;
+    return buttonEl;
+  }
+
+  getFormValues() {
+    const form = {};
+    const formElements = document.querySelector('form').elements;
+
+    for (let i = 0; i < formElements.length; i++) {
+      const el = formElements[i];
+      form[el.name] = el.value;
+    }
+
+    return form;
+  }
 }
