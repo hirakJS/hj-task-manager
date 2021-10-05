@@ -53,16 +53,52 @@ section#content1 .col {
   border-color: #ddd;
 }
 
+div.card {
+  background: #fff;
+}
+
 button.btn {
   background-color: #000;
   color: #fff;
 }
 
+button.btn.no-bg {
+  background-color: transparent;
+  color: #000;
+}
+
 button.btn:hover {
   background-color: #147dd3;
+  color: #fff;
 }
 
 footer {
   color: #636363;
   border-color: #ddd;
+}
+
+div#absolute-area {
+  background-color: #0009;
+}
+div.dialog {
+  background-color: #fff;
+}
+div.dialog-header {
+  background-color: #fff;
+  border-bottom-color: #c5c5c5;
+}
+div.dialog-footer {
+  background-color: #fff;
+  border-top-color: #c5c5c5;;
+}
+
+input[type="text"],
+textarea {
+  border-color: #636363;
+  color: #000;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #147dd3;
 }
