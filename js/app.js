@@ -54,36 +54,44 @@ const columnEls = Settings.columns.map(col => {
   return createColumnDiv(col);
 });
 
+const dialog = new Dialog(
+  id = 'dialog-1',
+  title = 'Create Task',
+  body = [
+    { type: InputType.text, name: 'title', label: 'Title' },
+    { type: InputType.textArea, name: 'description', label: 'description' },
+  ],
+  buttons = [
+    'cancel',
+    'submit'
+  ]
+);
 
 createBtn.addEventListener('click', () => {
   openDialog();
 });
 
-function addCard(event) {
-  // const formEl = event.target.parentElement.previousElementSibling.firstElementChild;
-  const data = Dialog.data();
-  closeDialog();
-  if (data) {
-    const cardEl = createCardEl(data.title);
-    columnEls[0].columnContentEl.appendChild(cardEl);
-  }
-}
-
-absoluteArea.appendChild(Dialog.create({
-  id: 'dialog-1',
-  title: 'Create Task'
-}));
-
 function openDialog() {
-  const inputTextOne = document.querySelector('input#text-one');
-
   absoluteArea.style.display = "block";
+  absoluteArea.appendChild(dialog.element);
 
+  const focusTarget = `#text-${dialog.body[0].name}-0`;
+  const inputTextOne = document.querySelector(focusTarget);
   inputTextOne.focus();
 }
 
 function closeDialog() {
+  absoluteArea.removeChild(dialog.element);
   absoluteArea.style.display = "none";
+}
+
+function addCard() {
+  const data = dialog.getFormValues();
+  closeDialog();
+  if (data.title != '') {
+    const cardEl = createCardEl(data.title);
+    columnEls[0].columnContentEl.appendChild(cardEl);
+  }
 }
 
 function createColumnDiv(columnName) {
@@ -130,7 +138,7 @@ function createCardEl(data) {
     event.preventDefault();
     if (confirm('Do you really wanna delete the task?')) {
       divEl.remove();
-      tasks.pop(data[0].length)
+      // tasks.pop(data[0].length)
     }
   })
   return divEl;
