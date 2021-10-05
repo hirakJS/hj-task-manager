@@ -42,7 +42,10 @@ footer.innerHTML = `&copy; ${(new Date()).getFullYear()}. Code with <3`;
 
 const content = document.querySelector('#content');
 
+const absoluteArea = document.querySelector('#absolute-area');
+
 const tasks = [];
+
 const countsEls = Settings.counts.map(col => {
         return createCountDiv(col);
 });
@@ -51,13 +54,37 @@ const columnEls = Settings.columns.map(col => {
   return createColumnDiv(col);
 });
 
+
 createBtn.addEventListener('click', () => {
-  const data = prompt('Enter task info:', '');
+  openDialog();
+});
+
+function addCard(event) {
+  // const formEl = event.target.parentElement.previousElementSibling.firstElementChild;
+  const data = Dialog.data();
+  closeDialog();
   if (data) {
-    const cardEl = createCardEl(data);
+    const cardEl = createCardEl(data.title);
     columnEls[0].columnContentEl.appendChild(cardEl);
   }
-});
+}
+
+absoluteArea.appendChild(Dialog.create({
+  id: 'dialog-1',
+  title: 'Create Task'
+}));
+
+function openDialog() {
+  const inputTextOne = document.querySelector('input#text-one');
+
+  absoluteArea.style.display = "block";
+
+  inputTextOne.focus();
+}
+
+function closeDialog() {
+  absoluteArea.style.display = "none";
+}
 
 function createColumnDiv(columnName) {
   const columnEl = document.createElement('div');
@@ -91,7 +118,7 @@ function createCardEl(data) {
   const divEl = document.createElement('div');
   divEl.setAttribute('class', 'card');
   divEl.innerHTML = data;
-  tasks.push(data[0].length)
+  // tasks.push(data[0].length)
   divEl.addEventListener('click', () => {
     const m_data = prompt('Edit task info:', divEl.innerHTML);
     if (m_data) {
@@ -134,3 +161,5 @@ function createCountDiv(columnName) {
     columnContentEl: columnContentEl,
   };
 }
+
+
