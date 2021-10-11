@@ -36,6 +36,7 @@ const brand = document.querySelector('#brand');
 brand.innerHTML = AppInfo.name;
 
 const createBtn = document.querySelector('#create-btn');
+const logoutBtn = document.querySelector('#logout-btn');
 
 const footer = document.querySelector('footer');
 footer.innerHTML = `&copy; ${(new Date()).getFullYear()}. Code with <3`;
@@ -46,13 +47,80 @@ const absoluteArea = document.querySelector('#absolute-area');
 
 const tasks = [];
 
-const countsEls = Settings.counts.map(col => {
-        return createCountDiv(col);
+// const countsEls = Settings.counts.map(col => {
+//   return createCountDiv(col);
+// });
+
+const loginView = new LoginView;
+
+loadLoginPage();
+
+logoutBtn.addEventListener('click', () => {
+  doLogout();
 });
 
-const columnEls = Settings.columns.map(col => {
-  return createColumnDiv(col);
+window.addEventListener('hashchange', (e) => {
+  if (location.hash == "#login") {
+    loadLoginPage();
+  } else {
+    loadMainPage();
+  }
 });
+
+// const columnEls = Settings.columns.map(col => {
+//   return createColumnDiv(col);
+// });
+
+function loadMainPage() {
+  loginView.deleteView();
+  logoutBtn.style.display = "block";
+  createBtn.style.visibility = "visible";
+  Settings.columns.forEach(col => {
+    createColumnDiv(col);
+  });
+}
+
+function loadLoginPage() {
+  logoutBtn.style.display = "none";
+  createBtn.style.visibility = "hidden";
+  content.appendChild(loginView.view);
+}
+
+const login = new Login;
+
+function doLogin(event) {
+  const data = event.target.parentElement.children;
+  const username = data.username.value;
+  const password = data.password.value;
+  const errorDiv = data.error;
+  if (!login.isLoggedIn) {
+    try {
+      login.login(username, password);
+      login.isLoggedIn = true;
+      loadMainPage();
+    } catch (error) {
+      console.error(error);
+      errorDiv.innerHTML = error;
+      errorDiv.style.visibility = "visible";
+    }
+  }
+}
+
+function doRegister(event) {
+  const data = event.target.parentElement.children;
+  const username = data.username.value;
+  const password = data.password.value;
+  const errorDiv = data.error;
+
+  login.register(username, password);
+  errorDiv.innerHTML = "You're successfully registered!";
+  errorDiv.style.visibility = "visible";
+  errorDiv.style.color = "#009688";
+}
+
+function doLogout() {
+  loadLoginPage();
+}
 
 const dialog = new Dialog(
   id = 'dialog-1',
@@ -90,7 +158,7 @@ function addCard() {
   closeDialog();
   if (data.title != '') {
     const cardEl = createCardEl(data.title);
-    columnEls[0].columnContentEl.appendChild(cardEl);
+    content.firstElementChild.lastElementChild.appendChild(cardEl);
   }
 }
 
@@ -165,7 +233,7 @@ function createCountDiv(columnName) {
   countsEls.appendChild(columnContentEl);
 
   content1.appendChild(countsEls);
- return {
+  return {
     columnContentEl: columnContentEl,
   };
 }

@@ -40,7 +40,7 @@ header #create-btn:hover {
 }
 
 section#content {
-  background-color: #fff;
+  background-color: deepskyblue;
 }
 
 section#content .col {
@@ -72,6 +72,10 @@ button.btn:hover {
   color: #fff;
 }
 
+#login-panel {
+  background-color: #fff9;
+}
+
 footer {
   color: #636363;
   border-color: #ddd;
@@ -93,12 +97,14 @@ div.dialog-footer {
 }
 
 input[type="text"],
+input[type="password"],
 textarea {
   border-color: #636363;
   color: #000;
 }
 
 input[type="text"]:focus,
+input[type="password"]:focus,
 textarea:focus {
   border-color: #147dd3;
 }
