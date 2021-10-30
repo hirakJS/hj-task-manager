@@ -199,6 +199,8 @@ function createCardEl(data) {
     tasks.push(tasks[0].count)}
 
   const divEl = document.createElement('div');
+  divEl.setAttribute('class', 'draggable');
+  divEl.setAttribute('draggable', 'true');
   divEl.setAttribute('class', 'card');
   divEl.innerHTML = tasks[0].count+'. '+data;
   // tasks.push(data[0].length)
