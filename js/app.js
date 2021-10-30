@@ -191,9 +191,16 @@ function createColumnDiv(columnName) {
 }
 
 function createCardEl(data) {
+  if (tasks == '') {
+    count = {'count': parseInt(data[0].length)}
+    tasks.push(count)}
+  else {
+    tasks[0].count = tasks[0].count+1
+    tasks.push(tasks[0].count)}
+
   const divEl = document.createElement('div');
   divEl.setAttribute('class', 'card');
-  divEl.innerHTML = data;
+  divEl.innerHTML = tasks[0].count+'. '+data;
   // tasks.push(data[0].length)
   divEl.addEventListener('click', () => {
     const m_data = prompt('Edit task info:', divEl.innerHTML);
