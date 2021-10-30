@@ -192,6 +192,8 @@ function createColumnDiv(columnName) {
 
 function createCardEl(data) {
   const divEl = document.createElement('div');
+  divEl.setAttribute('class', 'draggable');
+  divEl.setAttribute('draggable', 'true');
   divEl.setAttribute('class', 'card');
   divEl.innerHTML = data;
   // tasks.push(data[0].length)
